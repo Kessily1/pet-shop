@@ -1,0 +1,41 @@
+<div>
+    <h2>Cadastro de Pet</h2>
+    <form (ngSubmit)="addPet()">
+      <label>Nome:</label>
+      <input [(ngModel)]="pet.nome" name="nome" required>
+  
+      <label>Espécie:</label>
+      <input [(ngModel)]="pet.especie" name="especie" required>
+  
+      <label>Idade:</label>
+      <input [(ngModel)]="pet.idade" name="idade" type="number" required>
+  
+      <label>Data de Nascimento:</label>
+      <input [(ngModel)]="pet.dataNascimento" name="dataNascimento" type="date" required>
+  
+      <label>Peso:</label>
+      <input [(ngModel)]="pet.peso" name="peso" type="number" required>
+  
+      <label>Cor:</label>
+      <input [(ngModel)]="pet.cor" name="cor" required>
+  
+      <label>Sexo:</label>
+      <select [(ngModel)]="pet.sexo" name="sexo">
+        <option value="Masculino">Masculino</option>
+        <option value="Feminino">Feminino</option>
+        <option value="Outro">Outro</option>
+      </select>
+  
+      <button type="submit">Adicionar Pet</button>
+    </form>
+  
+    <h3>Lista de Pets</h3>
+    <ul>
+      <li *ngFor="let pet of pets">
+        {{ pet.nome }} - {{ pet.especie }} - {{ pet.idade }} anos
+        <button (click)="updatePet(pet.id)">Atualizar</button>
+        <button (click)="deletePet(pet.id)">Deletar</button>
+      </li>
+    </ul>
+  </div>
+  
