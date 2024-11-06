@@ -23,7 +23,7 @@
                         <h5 class="m-0">Cadastro pet</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="procurar..."  class="w-full sm:w-auto"/>
                         </span>
                     </div>
                 </ng-template>
@@ -34,11 +34,10 @@
                         </th>
                         <th pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
                         <th pSortableColumn="name">nome <p-sortIcon field="name"></p-sortIcon></th>
-                        <th pSortableColumn="raça">raça <p-sortIcon field="raça"></p-sortIcon></th>
+                        <th pSortableColumn="raça">raca <p-sortIcon field="raca"></p-sortIcon></th>
                         <th pSortableColumn="cor">cor <p-sortIcon field="cor"></p-sortIcon></th>
                         <th pSortableColumn="idade">idade <p-sortIcon field="idade"></p-sortIcon></th>
                         <th pSortableColumn="price">sexo <p-sortIcon field="sexo"></p-sortIcon></th>
-                        <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
                        
                         <th></th>
                     </tr>
@@ -53,30 +52,26 @@
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">nome</span>
-                            {{pet.name}}
+                            {{pet.name  || 'N/A' }}
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">raça</span>
-                            {{pet.raca}}
+                            {{pet.raca || 'N/A'}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">cor</span>
-                            {{pet.cor}}
+                            {{pet.cor || 'N/A'}}
                         </td>
                        
                         <td style="width:14%; min-width:8rem;">
                             <span class="p-column-title">idade</span>
-                            {{pet.idade}} 
+                            {{pet.idade || 'N/A'}} 
                         </td>
                         <td style="width:14%; min-width:8rem;">
                             <span class="p-column-title">sexo</span>
-                            {{pet.sexo}} 
+                            {{pet.sexo || 'N/A'}} 
                         </td>
                         
-                        <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">Category</span>
-                            {{pet.category}}
-                        </td>
                     
                         <td>
                             <div class="flex">
@@ -112,21 +107,19 @@
                     <div class="formgrid grid">
                         <div class="field-radiobutton col-6">
                             <p-radioButton id="sexo1" name="sexo" value="fêmea" [(ngModel)]="pet.sexo"></p-radioButton>
-                            <label for="sexo1">fêmea</label>
+                            <label >fêmea</label>
                         </div>
                         <div class="field-radiobutton col-6">
                             <p-radioButton id="sexo2" name="sexo" value="macho" [(ngModel)]="pet.sexo"></p-radioButton>
-                            <label for="sexo2">macho</label>
+                            <label >macho</label>
                         </div>
                        
                         <div class="formgrid grid">
                             <div class="field col">
-                                <label for="idade">idade</label>
-                                <p-inputNumber id="idade" [(ngModel)]="pet.idade" mode="decimal" min="0" max="30" locale="en-US"></p-inputNumber>  <!--campo para receber a idade -->
+                                <label >idade</label>
+                                <p-inputNumber id="idade" [(ngModel)]="pet.idade" mode="decimal" min="0" max="30" locale="en-US"></p-inputNumber>  
         
                             </div>
-
-                            
                     </div>
                 </div>
 
