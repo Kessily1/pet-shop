@@ -114,13 +114,11 @@
                             <label >macho</label>
                         </div>
                        
-                        <div class="formgrid grid">
-                            <div class="field col">
-                                <label >idade</label>
-                                <p-inputNumber id="idade" [(ngModel)]="pet.idade" mode="decimal" min="0" max="30" locale="en-US"></p-inputNumber>  
-        
+                            <div class="field">
+                                <label for="idade">idade</label>
+                                <input type="text" pInputText id="idade" [(ngModel)]="pet.idade" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.idade}"/>
+                                <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.idade">idade is required.</small>
                             </div>
-                    </div>
                 </div>
 
                 </div>
