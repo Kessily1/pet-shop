@@ -40,4 +40,8 @@ Thumbs.db
 
 # Compiled files
 layout.css
-src/assets/demo/styles/badges.css
+src/assets/demo/styles/badges.css 
+src/environments/environments.prod.ts
+src/environments/environments.ts
+
+.env 
