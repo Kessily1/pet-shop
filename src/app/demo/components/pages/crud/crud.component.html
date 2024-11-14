@@ -34,11 +34,12 @@
                         </th>
                         <th pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
                         <th pSortableColumn="name">nome <p-sortIcon field="name"></p-sortIcon></th>
-                        <th pSortableColumn="raça">raca <p-sortIcon field="raca"></p-sortIcon></th>
                         <th pSortableColumn="cor">cor <p-sortIcon field="cor"></p-sortIcon></th>
                         <th pSortableColumn="idade">idade <p-sortIcon field="idade"></p-sortIcon></th>
-                        <th pSortableColumn="price">sexo <p-sortIcon field="sexo"></p-sortIcon></th>
-                       
+                        <th pSortableColumn="sexo">sexo <p-sortIcon field="sexo"></p-sortIcon></th>
+                        <th pSortableColumn="species">espécie <p-sortIcon field="species"></p-sortIcon></th>
+                        <th pSortableColumn="nascimento">data de nascimento <p-sortIcon field="nascimento"></p-sortIcon></th>
+                        <th pSortableColumn="peso">peso <p-sortIcon field="peso"></p-sortIcon></th>
                         <th></th>
                     </tr>
                 </ng-template>
@@ -55,14 +56,9 @@
                             {{pet.name  || 'N/A' }}
                         </td>
                         <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">raça</span>
-                            {{pet.raca || 'N/A'}}
-                        </td>
-                        <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">cor</span>
                             {{pet.cor || 'N/A'}}
                         </td>
-                       
                         <td style="width:14%; min-width:8rem;">
                             <span class="p-column-title">idade</span>
                             {{pet.idade || 'N/A'}} 
@@ -71,7 +67,18 @@
                             <span class="p-column-title">sexo</span>
                             {{pet.sexo || 'N/A'}} 
                         </td>
-                        
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">espécie</span>
+                            {{pet.species || 'N/A'}}
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">data de nascimento</span>
+                            {{pet.nascimento || 'N/A'}}
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">peso</span>
+                            {{pet.peso || 'N/A'}}
+                        </td>
                     
                         <td>
                             <div class="flex">
@@ -93,34 +100,43 @@
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.name">nome is required.</small>
                 </div>
                 <div class="field">
-                    <label for="raca">raça</label>
-                    <input type="text" pInputText id="raca" [(ngModel)]="pet.raca" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.raca}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.raca">raca is required.</small>
-                </div>
-                <div class="field">
                     <label for="cor">cor</label>
                     <input type="text" pInputText id="cor" [(ngModel)]="pet.cor" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.cor}"/>
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.cor">cor is required.</small>
                 </div>
                 <div class="field">
+                    <label for="idade">idade</label>
+                    <input type="text" pInputText id="idade" [(ngModel)]="pet.idade" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.idade}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.idade">idade is required.</small>
+                </div>
+                <div class="field">
+                    <label for="species">espécie</label>
+                    <input type="text" pInputText id="species" [(ngModel)]="pet.species" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.species}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.species">espécie is required.</small>
+                </div>
+                <div class="field">
+                    <label for="nascimento">data de nascimento</label>
+                    <input type="date" pInputText id="nascimento" [(ngModel)]="pet.nascimento" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.nascimento}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.nascimento">data de nascimento is required.</small>
+                </div>
+                <div class="field">
+                    <label for="peso">peso</label>
+                    <input type="number" pInputText id="peso" [(ngModel)]="pet.peso" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.peso}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.peso">peso is required.</small>
+                </div>
+                <div class="field">
                     <label class="mb-3">sexo</label>
                     <div class="formgrid grid">
                         <div class="field-radiobutton col-6">
-                            <p-radioButton id="sexo1" name="sexo" value="fêmea" [(ngModel)]="pet.sexo"></p-radioButton>
-                            <label >fêmea</label>
+                            <p-radioButton name="sexo" value="Masculino" [(ngModel)]="pet.sexo" label="Masculino"></p-radioButton>
                         </div>
                         <div class="field-radiobutton col-6">
-                            <p-radioButton id="sexo2" name="sexo" value="macho" [(ngModel)]="pet.sexo"></p-radioButton>
-                            <label >macho</label>
+                            <p-radioButton name="sexo" value="Feminino" [(ngModel)]="pet.sexo" label="Feminino"></p-radioButton>
                         </div>
-                       
-                            <div class="field">
-                                <label for="idade">idade</label>
-                                <input type="text" pInputText id="idade" [(ngModel)]="pet.idade" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.idade}"/>
-                                <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.idade">idade is required.</small>
-                            </div>
-                </div>
-
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton name="sexo" value="Outro" [(ngModel)]="pet.sexo" label="Outro"></p-radioButton>
+                        </div>
+                    </div>
                 </div>
             </ng-template>
 
