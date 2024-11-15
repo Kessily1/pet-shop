@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <div class="grid">
     <div class="col-12">
         <div class="card px-6 py-6">
@@ -6,81 +6,24 @@
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <div class="my-2">
-                        <button
-                            pButton
-                            pRipple
-                            label="Novo"
-                            icon="pi pi-plus"
-                            class="p-button-success mr-2"
-                            (click)="openNew()"
-                        ></button>
-                        <button
-                            pButton
-                            pRipple
-                            label="Deletar"
-                            icon="pi pi-trash"
-                            class="p-button-danger"
-                            (click)="deleteSelectedPets()"
-                            [disabled]="!selectedPets || !selectedPets.length"
-                        ></button>
+                        <button pButton pRipple label="novo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Deletar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedPets()" [disabled]="!selectedPets || !selectedPets.length"></button>
                     </div>
                 </ng-template>
 
                 <ng-template pTemplate="right">
-                    <p-fileUpload
-                        mode="basic"
-                        accept="image/*"
-                        [maxFileSize]="1000000"
-                        label="Import"
-                        chooseLabel="Import"
-                        class="mr-2 inline-block"
-                    ></p-fileUpload>
-                    <button
-                        pButton
-                        pRipple
-                        label="Export"
-                        icon="pi pi-upload"
-                        class="p-button-help"
-                        (click)="dt.exportCSV()"
-                    ></button>
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
                 </ng-template>
             </p-toolbar>
 
-            <p-table
-                #dt
-                [value]="pets"
-                [columns]="cols"
-                responsiveLayout="scroll"
-                [rows]="10"
-                [globalFilterFields]="[
-                    'name',
-                    'country.name',
-                    'representative.name',
-                    'status'
-                ]"
-                [paginator]="true"
-                [rowsPerPageOptions]="[10, 20, 30]"
-                [showCurrentPageReport]="true"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                [(selection)]="selectedPets"
-                selectionMode="multiple"
-                [rowHover]="true"
-                dataKey="id"
-            >
+            <p-table #dt [value]="pets" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedPets" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
-                    <div
-                        class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
-                    >
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                         <h5 class="m-0">Cadastro pet</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input
-                                pInputText
-                                type="text"
-                                (input)="onGlobalFilter(dt, $event)"
-                                placeholder="procurar..."
-                                class="w-full sm:w-auto"
-                            />
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="procurar..."  class="w-full sm:w-auto"/>
                         </span>
                     </div>
                 </ng-template>
@@ -91,11 +34,12 @@
                         </th>
                         <th pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
                         <th pSortableColumn="name">nome <p-sortIcon field="name"></p-sortIcon></th>
-                        <th pSortableColumn="raça">raca <p-sortIcon field="raca"></p-sortIcon></th>
                         <th pSortableColumn="cor">cor <p-sortIcon field="cor"></p-sortIcon></th>
                         <th pSortableColumn="idade">idade <p-sortIcon field="idade"></p-sortIcon></th>
-                        <th pSortableColumn="price">sexo <p-sortIcon field="sexo"></p-sortIcon></th>
-                       
+                        <th pSortableColumn="sexo">sexo <p-sortIcon field="sexo"></p-sortIcon></th>
+                        <th pSortableColumn="species">espécie <p-sortIcon field="species"></p-sortIcon></th>
+                        <th pSortableColumn="nascimento">data de nascimento <p-sortIcon field="nascimento"></p-sortIcon></th>
+                        <th pSortableColumn="peso">peso <p-sortIcon field="peso"></p-sortIcon></th>
                         <th></th>
                     </tr>
                 </ng-template>
@@ -104,49 +48,42 @@
                         <td>
                             <p-tableCheckbox [value]="pet"></p-tableCheckbox>
                         </td>
-                        <td style="width: 14%; min-width: 10rem">
-                            <span class="p-column-title">id</span>
-                            {{ pet.id || pet.id }}
-                        </td>
-                        <td style="width: 14%; min-width: 10rem">
-                            <span class="p-column-title">nome</span>
-                            {{ pet.name || "N/A" }}
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">id</span>
+                            {{pet.id || pet.id}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">raça</span>
-                            {{pet.raca || 'N/A'}}
+                            <span class="p-column-title">nome</span>
+                            {{pet.name  || 'N/A' }}
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">cor</span>
-                            {{ pet.cor || "N/A" }}
+                            {{pet.cor || 'N/A'}}
                         </td>
-                       
                         <td style="width:14%; min-width:8rem;">
                             <span class="p-column-title">idade</span>
-                            {{ pet.idade || "N/A" }}
+                            {{pet.idade || 'N/A'}} 
                         </td>
-                        <td style="width: 14%; min-width: 8rem">
+                        <td style="width:14%; min-width:8rem;">
                             <span class="p-column-title">sexo</span>
-                            {{ pet.sexo || "N/A" }}
+                            {{pet.sexo || 'N/A'}} 
                         </td>
-                        
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">espécie</span>
+                            {{pet.species || 'N/A'}}
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">data de nascimento</span>
+                            {{pet.nascimento || 'N/A'}}
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">peso</span>
+                            {{pet.peso || 'N/A'}}
+                        </td>
                     
                         <td>
                             <div class="flex">
-                                <button
-                                    pButton
-                                    pRipple
-                                    icon="pi pi-pencil"
-                                    class="p-button-rounded p-button-success mr-2"
-                                    (click)="editpet(pet)"
-                                ></button>
-                                <button
-                                    pButton
-                                    pRipple
-                                    icon="pi pi-trash"
-                                    class="p-button-rounded p-button-warning"
-                                    (click)="deletePet(pet)"
-                                ></button>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editpet(pet)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deletePet(pet)"></button>
                             </div>
                         </td>
                     </tr>
@@ -154,63 +91,18 @@
             </p-table>
         </div>
 
-        <p-dialog
-            [(visible)]="petDialog"
-            [style]="{ width: '450px' }"
-            header="pet Details"
-            [modal]="true"
-            class="p-fluid"
-        >
+        <p-dialog [(visible)]="petDialog" [style]="{width: '450px'}" header="pet Details" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
-                <img
-                    [src]="'assets/demo/images/product/' + pet.image"
-                    [alt]="pet.image"
-                    width="150"
-                    class="mt-0 mx-auto mb-5 block shadow-2"
-                    *ngIf="pet.image"
-                />
+                <img [src]="'assets/demo/images/product/' + pet.image" [alt]="pet.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="pet.image">
                 <div class="field">
                     <label for="name">nome</label>
-                    <input
-                        type="text"
-                        pInputText
-                        id="name"
-                        [(ngModel)]="pet.name"
-                        required
-                        autofocus
-                        [ngClass]="{
-                            'ng-invalid ng-dirty': submitted && !pet.name
-                        }"
-                    />
-                    <small
-                        class="ng-dirty ng-invalid"
-                        *ngIf="submitted && !pet.name"
-                        >nome is required.</small
-                    >
-                </div>
-                <div class="field">
-                    <label for="raca">raça</label>
-                    <input type="text" pInputText id="raca" [(ngModel)]="pet.raca" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.raca}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.raca">raca is required.</small>
+                    <input type="text" pInputText id="name" [(ngModel)]="pet.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.name}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.name">nome is required.</small>
                 </div>
                 <div class="field">
                     <label for="cor">cor</label>
-                    <input
-                        type="text"
-                        pInputText
-                        id="cor"
-                        [(ngModel)]="pet.cor"
-                        required
-                        autofocus
-                        [ngClass]="{
-                            'ng-invalid ng-dirty': submitted && !pet.cor
-                        }"
-                    />
-                    <small
-                        class="ng-dirty ng-invalid"
-                        *ngIf="submitted && !pet.cor"
-                        >cor is required.</small
-                    >
+                    <input type="text" pInputText id="cor" [(ngModel)]="pet.cor" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.cor}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.cor">cor is required.</small>
                 </div>
                 <div class="field">
                     <label for="idade">idade</label>
@@ -236,110 +128,40 @@
                     <label class="mb-3">sexo</label>
                     <div class="formgrid grid">
                         <div class="field-radiobutton col-6">
-                            <p-radioButton id="sexo1" name="sexo" value="fêmea" [(ngModel)]="pet.sexo"></p-radioButton>
-                            <label >fêmea</label>
+                            <p-radioButton name="sexo" value="Masculino" [(ngModel)]="pet.sexo" label="Masculino"></p-radioButton>
                         </div>
                         <div class="field-radiobutton col-6">
-                            <p-radioButton id="sexo2" name="sexo" value="macho" [(ngModel)]="pet.sexo"></p-radioButton>
-                            <label >macho</label>
+                            <p-radioButton name="sexo" value="Feminino" [(ngModel)]="pet.sexo" label="Feminino"></p-radioButton>
                         </div>
-                       
-                        <div class="formgrid grid">
-                            <div class="field col">
-                                <label >idade</label>
-                                <p-inputNumber id="idade" [(ngModel)]="pet.idade" mode="decimal" min="0" max="30" locale="en-US"></p-inputNumber>  
-        
-                            </div>
                     </div>
                 </div>
             </ng-template>
 
             <ng-template pTemplate="footer">
-                <button
-                    pButton
-                    pRipple
-                    label="Cancel"
-                    icon="pi pi-times"
-                    class="p-button-text"
-                    (click)="hideDialog()"
-                ></button>
-                <button
-                    pButton
-                    pRipple
-                    label="Save"
-                    icon="pi pi-check"
-                    class="p-button-text"
-                    (click)="savePet()"
-                ></button>
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="savePet()"></button>
             </ng-template>
         </p-dialog>
 
-        <p-dialog
-            [(visible)]="deletePetDialog"
-            header="Confirm"
-            [modal]="true"
-            [style]="{ width: '450px' }"
-        >
+        <p-dialog [(visible)]="deletePetDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
-                <i
-                    class="pi pi-exclamation-triangle mr-3"
-                    style="font-size: 2rem"
-                ></i>
-                <span *ngIf="pet"
-                    >Are you sure you want to delete <b>{{ pet.name }}</b
-                    >?</span
-                >
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="pet">Tem certeza de que deseja excluir? <b>{{pet.name}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
-                <button
-                    pButton
-                    pRipple
-                    icon="pi pi-times"
-                    class="p-button-text"
-                    label="No"
-                    (click)="deletePetDialog = false"
-                ></button>
-                <button
-                    pButton
-                    pRipple
-                    icon="pi pi-check"
-                    class="p-button-text"
-                    label="Yes"
-                    (click)="confirmDelete()"
-                ></button>
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletePetDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
             </ng-template>
         </p-dialog>
 
-        <p-dialog
-            [(visible)]="deletePetsDialog"
-            header="Confirm"
-            [modal]="true"
-            [style]="{ width: '450px' }"
-        >
+        <p-dialog [(visible)]="deletePetsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
-                <i
-                    class="pi pi-exclamation-triangle mr-3"
-                    style="font-size: 2rem"
-                ></i>
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
                 <span>Are you sure you want to delete selected products?</span>
             </div>
             <ng-template pTemplate="footer">
-                <button
-                    pButton
-                    pRipple
-                    icon="pi pi-times"
-                    class="p-button-text"
-                    label="No"
-                    (click)="deletePetsDialog = false"
-                ></button>
-                <button
-                    pButton
-                    pRipple
-                    icon="pi pi-check"
-                    class="p-button-text"
-                    label="Yes"
-                    (click)="confirmDeleteSelected()"
-                ></button>
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletePetsDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
             </ng-template>
         </p-dialog>
     </div>
