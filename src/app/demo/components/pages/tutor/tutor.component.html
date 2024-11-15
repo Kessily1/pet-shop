@@ -1,0 +1,131 @@
+<!doctype html>
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="novo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Deletar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedTutors()" [disabled]="!selectedTutors || !selectedTutors.length"></button>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="tutors" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','cpf','phone','email']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedTutors" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Cadastro tutor</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="procurar..." class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="name">nome <p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="cpf">CPF <p-sortIcon field="cpf"></p-sortIcon></th>
+                        <th pSortableColumn="phone">telefone <p-sortIcon field="phone"></p-sortIcon></th>
+                        <th pSortableColumn="email">email <p-sortIcon field="email"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-tutor>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="tutor"></p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">id</span>
+                            {{tutor.id || 'N/A'}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">nome</span>
+                            {{tutor.name || 'N/A'}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">CPF</span>
+                            {{tutor.cpf || 'N/A'}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">telefone</span>
+                            {{tutor.phone || 'N/A'}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">email</span>
+                            {{tutor.email || 'N/A'}}
+                        </td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editTutor(tutor)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteTutor(tutor)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="tutorDialog" [style]="{width: '450px'}" header="Detalhes do Tutor" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="name">nome</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="tutor.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.name}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.name">nome é obrigatório.</small>
+                </div>
+                <div class="field">
+                    <label for="cpf">CPF</label>
+                    <input type="text" pInputText id="cpf" [(ngModel)]="tutor.cpf" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.cpf}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.cpf">CPF é obrigatório.</small>
+                </div>
+                <div class="field">
+                    <label for="phone">telefone</label>
+                    <input type="text" pInputText id="phone" [(ngModel)]="tutor.phone" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.phone}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.phone">telefone é obrigatório.</small>
+                </div>
+                <div class="field">
+                    <label for="email">email</label>
+                    <input type="email" pInputText id="email" [(ngModel)]="tutor.email" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.email}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.email">email é obrigatório.</small>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Salvar" icon="pi pi-check" class="p-button-text" (click)="saveTutor()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteTutorDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="tutor">Tem certeza de que deseja deletar <b>{{tutor.name}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteTutorDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteTutorsDialog" header="Confirmar" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Tem certeza de que deseja deletar os tutores selecionados?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Não" (click)="deleteTutorsDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Sim" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>
