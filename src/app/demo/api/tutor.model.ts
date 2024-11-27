@@ -5,13 +5,15 @@ interface InventoryStatus {
 export interface tutor {
     id?: string;
     key?: string;
-    code?: string;
-    name?: string;
-    description?: string;
-    price?: number;
-    quantity?: number;
-    inventoryStatus?: InventoryStatus;
-    category?: string;
-    image?: string;
-    rating?: number;
+    logradouro?: string;
+    uf?: string;
+    name?: string;            
+    nascimento?: string;       
+    telefone?: string;         
+    cep?: string;              
+    estado?: string;           
+    municipio?: string;           
+    cpf?: string; 
+    sexo?: 'Masculino' | 'Feminino' | 'Outro'
+
 }

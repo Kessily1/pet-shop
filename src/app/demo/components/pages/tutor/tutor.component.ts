@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { tutor } from '../../../api/tutor.model';
+import { tutor } from '../../../../demo/api/tutor.model';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { tutorService } from '../../../service/tutor.service';
+import { tutorService } from '../../../../demo/service/tutor.service';
+import { CepService } from '../../../../demo/service/cep.service';
+
 
 @Component({
     templateUrl: './tutor.component.html',
@@ -12,33 +14,78 @@ export class TutorComponent implements OnInit {
 
     tutorDialog: boolean = false;
 
-    deleteTutorDialog: boolean = false;
+    deletetutorDialog: boolean = false;
 
-    deleteTutorsDialog: boolean = false;
+    deletetutorsDialog: boolean = false;
 
     tutors: tutor[] = [];
 
     tutor: tutor = {};
 
-    selectedTutors: tutor[] = [];
+    selectedtutors: tutor[] = [];
 
     submitted: boolean = false;
 
     cols: any[] = [];
 
-    rowsPerPageOptions = [5, 10, 20];
+    statuses: any[] = [];
 
-    constructor(private tutorService: tutorService, private messageService: MessageService) { }
+    rowsPerPageOptions = [5, 10, 20];
+    
+    ufs: any[] = [];
+
+    municipios: any[] = [];
+
+    constructor(private tutorService: tutorService, private messageService: MessageService, private cepService: CepService) { }
 
     ngOnInit() {
         this.tutorService.getTutors().subscribe(data => this.tutors = data);
 
+
         this.cols = [
-            { field: 'name', header: 'Name' },
-            { field: 'email', header: 'Email' },
-            { field: 'phone', header: 'Phone' },
-            { field: 'address', header: 'Address' }
-        ];
+            this.cols = [
+                { field: 'id', header: 'ID' },
+                { field: 'name', header: 'Nome' },
+                { field: 'nascimento', header: 'Data de Nascimento' },
+                { field: 'CEP', header: 'CEP' },
+                { field: 'estado', header: 'Estado' },
+                { field: 'municipio', header: 'Município' },
+        ]
+        ]
+       
+        setTimeout(() => {
+            console.log(this.tutors)
+        }, 3000);
+
+    }
+
+    getCep(cep: any) {
+        this.cepService.buscar(cep).subscribe(
+            (cep: any) => { 
+                this.tutor.logradouro = cep.logradouro;
+                const estadoId = this.ufs.find((estado: any) => estado.sigla == cep.uf);
+                this.tutor.estado = estadoId;
+                this.getMunicipios(estadoId.id);
+                setTimeout(() => {
+                    const municipioId = this.municipios.find((cidade: any) => cidade.nome == cep.localidade);
+                    this.tutor.municipio = municipioId;
+                }, 500);
+            }
+        );
+    }
+
+    getMunicipios(code: any) {
+        
+        this.cepService.buscaMunicipios(code).subscribe(
+            (municipios: any) => {
+                this.municipios = municipios;
+            }
+        );
+    }
+
+
+    testUf(){
+        console.log("municipio", this.tutor.municipio);
     }
 
     openNew() {
@@ -47,38 +94,38 @@ export class TutorComponent implements OnInit {
         this.tutorDialog = true;
     }
 
-    deleteSelectedTutors() {
-        this.deleteTutorsDialog = true;
+    deleteSelectedtutors() {
+        this.deletetutorsDialog = true;
     }
 
-    editTutor(tutor: tutor) {
+    edittutor(tutor: tutor) {
         this.tutor = { ...tutor };
         this.tutorDialog = true;
     }
 
-    deleteTutor(tutor: tutor) {
-        this.deleteTutorDialog = true;
+    deletetutor(tutor: tutor) {
+        this.deletetutorDialog = true;
+        console.log("Editando o tutor:", tutor);
         this.tutor = { ...tutor };
     }
     
     confirmDeleteSelected() {
-        this.deleteTutorsDialog = false;
-        this.selectedTutors.forEach(tutor => {
-            this.tutorService.deleteTutor(tutor.id).then(() => {
-                this.tutors = this.tutors.filter(val => !this.selectedTutors.includes(val));
-            });
-        });
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Tutors Deleted', life: 3000 });
-        this.selectedTutors = [];
+        console.log("confirme tutor ",this.tutor)
+        this.deletetutorsDialog = false;
+        this.tutorService.deleteTutor(this.tutor.key);
+        // this.tutors = this.tutors.filter(val => !this.selectedtutors.includes(val));
+        
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
+        this.selectedtutors = [];
     }
     
     confirmDelete() {
-        this.deleteTutorDialog = false;
-        this.tutorService.deleteTutor(this.tutor.id).then(() => {
-            this.tutors = this.tutors.filter(val => val.id !== this.tutor.id);
-            this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Tutor Deleted', life: 3000 });
-            this.tutor = {};
-        });
+        console.log("confirme tutor ",this.tutor)
+        this.deletetutorDialog = false;
+        // this.tutors = this.tutors.filter(val => val.id !== this.tutor.id);
+        this.tutorService.deleteTutor(this.tutor.key);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'tutor Deleted', life: 3000 });
+        this.tutor = {};
     }
 
     hideDialog() {
@@ -86,21 +133,23 @@ export class TutorComponent implements OnInit {
         this.submitted = false;
     }
 
-    saveTutor() {
+    savetutor() {
         this.submitted = true;
 
         if (this.tutor.name?.trim()) {
             if (this.tutor.id) {
-                this.tutorService.updateTutor(this.tutor.id, this.tutor).then(() => {
-                    this.tutors[this.findIndexById(this.tutor.id)] = this.tutor;
-                    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Tutor Updated', life: 3000 });
-                });
+                // @ts-ignore
+                this.tutor.inventoryStatus = this.tutor.inventoryStatus ? this.tutor.inventoryStatus.value : 'INSTOCK';
+                // this.tutors[this.findIndexById(this.tutor.id)] = this.tutor;
+                this.tutorService.updateTutor(this.tutor.key, this.tutor);
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'tutor Updated', life: 3000 });
             } else {
                 this.tutor.id = this.createId();
-                this.tutorService.createTutor(this.tutor).then(() => {
-                    this.tutors.push(this.tutor);
-                    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Tutor Created', life: 3000 });
-                });
+               this.tutorService.createTutor(this.tutor);
+                // @ts-ignore
+                this.tutor.inventoryStatus = this.tutor.inventoryStatus ? this.tutor.inventoryStatus.value : 'INSTOCK';
+                // this.tutors.push(this.tutor);
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'tutor Created', life: 3000 });
             }
 
             this.tutors = [...this.tutors];
@@ -110,7 +159,15 @@ export class TutorComponent implements OnInit {
     }
 
     findIndexById(id: string): number {
-        return this.tutors.findIndex(t => t.id === id);
+        let index = -1;
+        for (let i = 0; i < this.tutors.length; i++) {
+            if (this.tutors[i].id === id) {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
     }
 
     createId(): string {

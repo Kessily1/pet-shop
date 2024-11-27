@@ -2,7 +2,7 @@ interface InventoryStatus {
     label: string;
     value: string;
 }
-export interface Pet {
+export interface Servico {
     id?: string;  
     key?: string;          
     name?: string;           
