@@ -6,24 +6,24 @@
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <div class="my-2">
-                        <button pButton pRipple label="novo" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-                        <button pButton pRipple label="Deletar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedtutors()" [disabled]="!selectedtutors || !selectedtutors.length"></button>
+                        <button pButton pRipple label="NOVO" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="DELETAR" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedtutors()" [disabled]="!selectedtutors || !selectedtutors.length"></button>
                     </div>
                 </ng-template>
 
                 <ng-template pTemplate="right">
-                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
-                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="IMPORTAR" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="EXPORTAR" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
                 </ng-template>
             </p-toolbar>
 
             <p-table #dt [value]="tutors" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedtutors" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">Cadastro de tutor</h5>
+                        <h5 class="m-0">CADASTRO TUTORES</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="procurar..."  class="w-full sm:w-auto"/>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="PROCURAR..."  class="w-full sm:w-auto"/>
                         </span>
                     </div>
                 </ng-template>
@@ -38,16 +38,16 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
-                        <th pSortableColumn="name">nome <p-sortIcon field="name"></p-sortIcon></th>
-                        <th pSortableColumn="nascimento">data de nascimento <p-sortIcon field="nascimento"></p-sortIcon></th>
+                        <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="nascimento">Data de nascimento <p-sortIcon field="nascimento"></p-sortIcon></th>
                         <th pSortableColumn="CEP">CEP <p-sortIcon field="CEP"></p-sortIcon></th>
                         <th pSortableColumn="Estado">Estado <p-sortIcon field="Estado"></p-sortIcon></th>
-                        <th pSortableColumn="municipios">municipio <p-sortIcon field="municipios"></p-sortIcon></th>
-                        <th pSortableColumn="logradouro">logradouro <p-sortIcon field="logradouro"></p-sortIcon></th>
+                        <th pSortableColumn="municipios">Municipio <p-sortIcon field="municipios"></p-sortIcon></th>
+                        <th pSortableColumn="logradouro">Logradouro <p-sortIcon field="logradouro"></p-sortIcon></th>
                         <th pSortableColumn="Telefone">Telefone <p-sortIcon field="Telefone"></p-sortIcon></th>
                         <th pSortableColumn="CPF">CPF <p-sortIcon field="CPF"></p-sortIcon></th>
-                        <th pSortableColumn="sexo">sexo <p-sortIcon field="sexo"></p-sortIcon></th>
+                        <th pSortableColumn="sexo">Sexo <p-sortIcon field="sexo"></p-sortIcon></th>
                         <th></th>
                     </tr>
                 </ng-template>
@@ -109,16 +109,16 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="tutorDialog" [style]="{width: '450px'}" header="tutor Details" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="tutorDialog" [style]="{width: '450px'}" header="DETALHES TUTORES" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
                 <img [src]="'assets/demo/images/product/' + tutor.image" [alt]="tutor.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="tutor.image">
                 <div class="field">
-                    <label for="name">nome</label>
+                    <label for="name">Nome</label>
                     <input type="text" pInputText id="name" [(ngModel)]="tutor.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.name}"/>
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.name">nome is required.</small>
                 </div>
                 <div class="field">
-                    <label for="nascimento">data de nascimento</label>
+                    <label for="nascimento">Data de nascimento</label>
                     <input type="date" pInputText id="nascimento" [(ngModel)]="tutor.nascimento" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.nascimento}"/>
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.nascimento">data de nascimento is required.</small>
                 </div>
@@ -158,7 +158,7 @@
                 
         
                 <div class="field">
-                    <label class="mb-3">sexo</label>
+                    <label class="mb-3">Sexo</label>
                     <div class="formgrid grid">
                         <div class="field-radiobutton col-6">
                             <p-radioButton name="sexo" value="Masculino" [(ngModel)]="tutor.sexo" label="Masculino"></p-radioButton>
@@ -174,8 +174,8 @@
             </ng-template>
 
             <ng-template pTemplate="footer">
-                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="savetutor()"></button>
+                <button pButton pRipple label="CANCELAR" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="SALVAR" icon="pi pi-check" class="p-button-text" (click)="savetutor()"></button>
             </ng-template>
         </p-dialog>
 
@@ -185,8 +185,8 @@
                 <span *ngIf="tutor">Tem certeza de que deseja excluir? <b>{{tutor.name}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletetutorDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="NÃO" (click)="deletetutorDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="SIM" (click)="confirmDelete()"></button>
             </ng-template>
         </p-dialog>
 
@@ -196,8 +196,8 @@
                 <span>Are you sure you want to delete selected products?</span>
             </div>
             <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletetutorsDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="NÃO" (click)="deletetutorsDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="SIM" (click)="confirmDeleteSelected()"></button>
             </ng-template>
         </p-dialog>
     </div>
