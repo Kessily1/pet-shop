@@ -16,7 +16,7 @@ export class ServicoComponent implements OnInit {
 
     deleteServicosDialog: boolean = false;
 
-    servicos: Servico[] = [];
+    Servicos: Servico[] = [];
 
     servico: Servico = {};
 
@@ -30,14 +30,14 @@ export class ServicoComponent implements OnInit {
 
     rowsPerPageOptions = [5, 10, 20];
 
-    constructor(private servicoService: ServicoService, private messageService: MessageService) { }
+    constructor(private ServicoService: ServicoService, private messageService: MessageService) { }
 
     ngOnInit() {
-        this.servicoService.getServicos().subscribe(data => this.servicos = data);
+        this.ServicoService.getServicos().subscribe(data => this.Servicos = data);
 
 
         this.cols = [
-            { field: 'servicos', header: 'Servico' },
+            { field: 'product', header: 'servico' },
             { field: 'price', header: 'Price' },
             { field: 'category', header: 'Category' },
             { field: 'rating', header: 'Reviews' },
@@ -50,7 +50,7 @@ export class ServicoComponent implements OnInit {
             { label: 'OUTOFSTOCK', value: 'outofstock' }
         ];
         setTimeout(() => {
-            console.log(this.servicos)
+            console.log(this.Servicos)
         }, 3000);
 
     }
@@ -65,12 +65,12 @@ export class ServicoComponent implements OnInit {
         this.deleteServicosDialog = true;
     }
 
-    editServico(servico: Servico) {
+    editservico(servico: Servico) {
         this.servico = { ...servico };
         this.servicoDialog = true;
     }
 
-    deleteServico(servico: Servico) {
+    deleteservico(servico: Servico) {
         this.deleteServicoDialog = true;
         console.log("Editando o servico:", servico);
         this.servico = { ...servico };
@@ -79,7 +79,8 @@ export class ServicoComponent implements OnInit {
     confirmDeleteSelected() {
         console.log("confirme servico ",this.servico)
         this.deleteServicosDialog = false;
-        this.servicoService.deleteServico(this.servico.key);
+        this.ServicoService.deleteServico(this.servico.key);
+        // this.Servicos = this.Servicos.filter(val => !this.selectedServicos.includes(val));
         
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
         this.selectedServicos = [];
@@ -88,9 +89,9 @@ export class ServicoComponent implements OnInit {
     confirmDelete() {
         console.log("confirme servico ",this.servico)
         this.deleteServicoDialog = false;
-        // this.pets = this.pets.filter(val => val.id !== this.servico.id);
-        this.servicoService.deleteServico(this.servico.key);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Servico Deleted', life: 3000 });
+        // this.Servicos = this.Servicos.filter(val => val.id !== this.servico.id);
+        this.ServicoService.deleteServico(this.servico.key);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'servico Deleted', life: 3000 });
         this.servico = {};
     }
 
@@ -99,26 +100,26 @@ export class ServicoComponent implements OnInit {
         this.submitted = false;
     }
 
-    savePet() {
+    saveServico() {
         this.submitted = true;
 
         if (this.servico.name?.trim()) {
             if (this.servico.id) {
                 // @ts-ignore
                 this.servico.inventoryStatus = this.servico.inventoryStatus ? this.servico.inventoryStatus.value : 'INSTOCK';
-                // this.pets[this.findIndexById(this.servico.id)] = this.servico;
-                this.servicoService.updateServico(this.servico.key, this.servico);
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Servico Updated', life: 3000 });
+                // this.Servicos[this.findIndexById(this.servico.id)] = this.servico;
+                this.ServicoService.updateServico(this.servico.key, this.servico);
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'servico Updated', life: 3000 });
             } else {
                 this.servico.id = this.createId();
-               this.servicoService.createServico(this.servico);
+               this.ServicoService.createServico(this.servico);
                 // @ts-ignore
                 this.servico.inventoryStatus = this.servico.inventoryStatus ? this.servico.inventoryStatus.value : 'INSTOCK';
-                // this.pets.push(this.servico);
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Servico Created', life: 3000 });
+                // this.Servicos.push(this.servico);
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'servico Created', life: 3000 });
             }
 
-            this.servicos = [...this.servicos];
+            this.Servicos = [...this.Servicos];
             this.servicoDialog = false;
             this.servico = {};
         }
@@ -126,8 +127,8 @@ export class ServicoComponent implements OnInit {
 
     findIndexById(id: string): number {
         let index = -1;
-        for (let i = 0; i < this.servicos.length; i++) {
-            if (this.servico[i].id === id) {
+        for (let i = 0; i < this.Servicos.length; i++) {
+            if (this.Servicos[i].id === id) {
                 index = i;
                 break;
             }

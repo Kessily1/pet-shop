@@ -8,7 +8,7 @@ import { Servico } from '../api/servico.model.js';
     providedIn: 'root'
 })
 export class ServicoService {
-    private basePath = "servico"
+    private basePath = "servicos"
 
 
     constructor(private db: AngularFireDatabase) { }
