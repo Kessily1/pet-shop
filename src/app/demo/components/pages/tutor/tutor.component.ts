@@ -32,7 +32,7 @@ export class TutorComponent implements OnInit {
 
     rowsPerPageOptions = [5, 10, 20];
     
-    ufs: any[] = [];
+    ufs: any = [];
 
     municipios: any[] = [];
 
@@ -40,6 +40,7 @@ export class TutorComponent implements OnInit {
 
     ngOnInit() {
         this.tutorService.getTutors().subscribe(data => this.tutors = data);
+        this.cepService.buscaEstados().subscribe(data => this.ufs = data);
 
 
         this.cols = [
@@ -133,7 +134,7 @@ export class TutorComponent implements OnInit {
         this.submitted = false;
     }
 
-    savetutor() {
+    Salvartutor() {
         this.submitted = true;
 
         if (this.tutor.name?.trim()) {
