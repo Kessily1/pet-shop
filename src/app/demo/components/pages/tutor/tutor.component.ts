@@ -32,16 +32,22 @@ export class TutorComponent implements OnInit {
 
     rowsPerPageOptions = [5, 10, 20];
     
-    ufs: any = [];
+    ufs: any = [] = [];
 
     municipios: any[] = [];
 
     constructor(private tutorService: tutorService, private messageService: MessageService, private cepService: CepService) { }
 
-    ngOnInit() {
-        this.tutorService.getTutors().subscribe(data => this.tutors = data);
-        this.cepService.buscaEstados().subscribe(data => this.ufs = data);
 
+    ngOnInit() {
+       this.cepService.buscaEstados().subscribe((ufs: any[])=> {
+            this.ufs = ufs;
+        })
+
+        this.tutorService.getTutors().subscribe((tutors: any ) => {
+            this.tutors = tutors;
+            console.log(tutors)
+        })
 
         this.cols = [
             this.cols = [
@@ -75,7 +81,7 @@ export class TutorComponent implements OnInit {
         );
     }
 
-    getMunicipios(code: any) {
+    getMunicipios(code: string) {
         
         this.cepService.buscaMunicipios(code).subscribe(
             (municipios: any) => {

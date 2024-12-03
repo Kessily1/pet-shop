@@ -28,11 +28,6 @@
                     </div>
                 </ng-template>
 
-
-
-
-
-                
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 3rem">
@@ -43,7 +38,7 @@
                         <th pSortableColumn="nascimento">Data de nascimento <p-sortIcon field="nascimento"></p-sortIcon></th>
                         <th pSortableColumn="CEP">CEP <p-sortIcon field="CEP"></p-sortIcon></th>
                         <th pSortableColumn="Estado">Estado <p-sortIcon field="Estado"></p-sortIcon></th>
-                        <th pSortableColumn="municipios">Municipio <p-sortIcon field="municipios"></p-sortIcon></th>
+                        <th pSortableColumn="municipio">Municipio <p-sortIcon field="municipio"></p-sortIcon></th>
                         <th pSortableColumn="logradouro">Logradouro <p-sortIcon field="logradouro"></p-sortIcon></th>
                         <th pSortableColumn="Telefone">Telefone <p-sortIcon field="Telefone"></p-sortIcon></th>
                         <th pSortableColumn="CPF">CPF <p-sortIcon field="CPF"></p-sortIcon></th>
@@ -69,16 +64,16 @@
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">CEP</span>
-                            {{tutor.CEP || 'N/A'}}
+                            {{tutor.cep || 'N/A'}}
                         </td>
                         <td style="width:14%; min-width:8rem;">
                             <span class="p-column-title">Estado</span>
-                            {{tutor.Estado || 'N/A'}} 
+                            {{tutor.estado?.nome || 'N/A'}}
                         </td>
                         
                         <td style="width:14%; min-width:8rem;">
-                            <span class="p-column-title">municipios</span>
-                            {{tutor.municipios || 'N/A'}}
+                            <span class="p-column-title">Municipio</span>
+                            {{tutor.municipio?.nome || 'N/A'}}
                         </td>
                     
                         <td style="width:14%; min-width:8rem;">
@@ -124,18 +119,19 @@
                 </div>
                 <div class="field">
                     <label for="CEP">CEP</label>
-                   <input type="text" pInputText id="cep" [(ngModel)]="tutor.cep" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.name}" (blur)="getCep(tutor.cep)"/>
+                   <input type="number" pInputText id="cep" [(ngModel)]="tutor.cep" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.cep}" (blur)="getCep(tutor.cep)"/>
                 <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.cep">CEP is required.</small>
                 </div>
                 <div class="field">
                     <label for="ufs">Estado</label>
-                   <p-dropdown (onChange)="getMunicipios(tutor.estado.id)" [options]="ufs" [(ngModel)]="tutor.estado" optionLabel="nome" placeholder="Selecione um estado"/>
+                   <p-dropdown (onChange)="getMunicipios(tutor.Estado.id)" [options]="ufs" [(ngModel)]="tutor.estado" optionLabel="nome" placeholder="Selecione um estado"/>
                 </div>
                 
                 <div class="field">
                     <label for="municipios">Municípios</label>
-                    <p-dropdown (onChange)="testeUf()" [options]="municipios" [(ngModel)]="tutor.municipios" 
-                                optionLabel="nome" placeholder="Selecione um município"></p-dropdown>
+                    <p-dropdown [options]="municipios" [(ngModel)]="tutor.municipio" 
+                    optionLabel="nome" placeholder="Selecione um município"></p-dropdown>
+        
                 </div>
                 
                 <div class="field">
@@ -146,16 +142,14 @@
                 
                 <div class="field">
                     <label for="CPF">CPF</label>
-                    <input type="text" pInputText id="CPF" [(ngModel)]="tutor.CPF" required autofocus [appMask]="'000.000.000-00'" [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.CPF}" />
+                    <input type="number" pInputText id="CPF" [(ngModel)]="tutor.CPF" required autofocus [appMask]="'000.000.000-00'" [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.CPF}" />
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.CPF">CPF is required.</small>
                 </div>
                 <div class="field">
                     <label for="Telefone">Telefone</label>
-                    <input type="text" pInputText id="Telefone" [(ngModel)]="tutor.Telefone" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.Telefone}"/>
+                    <input type="number" pInputText id="Telefone" [(ngModel)]="tutor.Telefone" required autofocus [appMask]="'000.000.000-00'" [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.Telefone}" />
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.Telefone">Telefone is required.</small>
-                </div>
-               
-                
+                </div>            
         
                 <div class="field">
                     <label class="mb-3">Sexo</label>

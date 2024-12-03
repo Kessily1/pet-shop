@@ -10,9 +10,9 @@ export interface tutor {
     name?: string;            
     nascimento?: string;       
     telefone?: string;         
-    cep?: string;              
-    estado?: string;           
-    municipio?: string;           
+    cep?: any;              
+    estado?: any;           
+    municipio?: any;           
     cpf?: string; 
     sexo?: 'Masculino' | 'Feminino' | 'Outro'
 
