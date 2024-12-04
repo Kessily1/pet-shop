@@ -37,4 +37,14 @@ export class PetService {
     deletePet(key: string): Promise<void> {
         return this.db.object<Pet>(`${this.basePath}/${key}`).remove(); 
      }
+
+     getLastPets(limit: number): Observable<Pet[]> {
+        return this.db.list<Pet>(this.basePath, ref => ref.limitToLast(limit)).snapshotChanges().pipe(
+            map(changes =>
+                changes.map(c => ({ key: c.payload.key, ...c.payload.val() as Pet }))
+            )
+        );
+    }
+    
+      
 }

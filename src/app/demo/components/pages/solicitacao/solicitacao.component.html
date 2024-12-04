@@ -20,7 +20,7 @@
             <p-table #dt [value]="Solicitacoes" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedSolicitacoes" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">Solicitacoes</h5>
+                        <h5 class="m-0">SOLICITAÇÕES</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="PROCURAR..."  class="w-full sm:w-auto"/>
@@ -33,14 +33,11 @@
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
                         <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
-                        <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon></th>
-                        <th pSortableColumn="cor">Cor <p-sortIcon field="cor"></p-sortIcon></th>
-                        <th pSortableColumn="idade">Idade <p-sortIcon field="idade"></p-sortIcon></th>
-                        <th pSortableColumn="sexo">Sexo <p-sortIcon field="sexo"></p-sortIcon></th>
-                        <th pSortableColumn="species">Espécie <p-sortIcon field="species"></p-sortIcon></th>
-                        <th pSortableColumn="nascimento">Data de nascimento <p-sortIcon field="nascimento"></p-sortIcon></th>
-                        <th pSortableColumn="peso">Peso <p-sortIcon field="peso"></p-sortIcon></th>
-                        <th></th>
+                        <th pSortableColumn="pet">Pet <p-sortIcon field="pet"></p-sortIcon></th>
+                        <th pSortableColumn="tutor">Tutor <p-sortIcon field="tutor"></p-sortIcon></th>
+                        <th pSortableColumn="servico">Serviço <p-sortIcon field="servico"></p-sortIcon></th>
+                        <th pSortableColumn="data">Data solicitação <p-sortIcon field="data"></p-sortIcon></th>
+                       
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-solicitacao>
@@ -52,34 +49,21 @@
                             {{solicitacao.id || solicitacao.id}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">nome</span>
-                            {{solicitacao.name  || 'N/A' }}
+                            <span class="p-column-title">pet</span>
+                            {{solicitacao.pet  || 'N/A' }}
                         </td>
                         <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">cor</span>
-                            {{solicitacao.cor || 'N/A'}}
+                            <span class="p-column-title">tutor</span>
+                            {{solicitacao.tutor || 'N/A'}}
                         </td>
                         <td style="width:14%; min-width:8rem;">
-                            <span class="p-column-title">idade</span>
-                            {{solicitacao.idade || 'N/A'}} 
+                            <span class="p-column-title">servico</span>
+                            {{solicitacao.servico || 'N/A'}} 
                         </td>
                         <td style="width:14%; min-width:8rem;">
-                            <span class="p-column-title">sexo</span>
-                            {{solicitacao.sexo || 'N/A'}} 
+                            <span class="p-column-title">data</span>
+                            {{solicitacao.data || 'N/A'}} 
                         </td>
-                        <td style="width:14%; min-width:8rem;">
-                            <span class="p-column-title">espécie</span>
-                            {{solicitacao.species || 'N/A'}}
-                        </td>
-                        <td style="width:14%; min-width:8rem;">
-                            <span class="p-column-title">data de nascimento</span>
-                            {{solicitacao.nascimento || 'N/A'}}
-                        </td>
-                        <td style="width:14%; min-width:8rem;">
-                            <span class="p-column-title">peso</span>
-                            {{solicitacao.peso || 'N/A'}}
-                        </td>
-                    
                         <td>
                             <div class="flex">
                                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editsolicitacao(solicitacao)"></button>
@@ -95,46 +79,39 @@
             <ng-template pTemplate="content">
                 <img [src]="'assets/demo/images/product/' + solicitacao.image" [alt]="solicitacao.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="solicitacao.image">
                 <div class="field">
-                    <label for="name">Nome</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="solicitacao.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.name}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.name">nome is required.</small>
+                    <label for="nome">nome</label>
+                    <input type="text" pInputText id="nome" [(ngModel)]="solicitacao.nome" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.nome}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.nome">nome is required.</small>
                 </div>
-                <div class="field">
-                    <label for="cor">Cor</label>
-                    <input type="text" pInputText id="cor" [(ngModel)]="solicitacao.cor" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.cor}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.cor">cor is required.</small>
-                </div>
-                <div class="field">
-                    <label for="idade">Idade</label>
-                    <input type="number" pInputText id="idade" [(ngModel)]="solicitacao.idade" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.idade}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.idade">idade is required.</small>
-                </div>
-                <div class="field">
-                    <label for="species">Espécie</label>
-                    <input type="text" pInputText id="species" [(ngModel)]="solicitacao.species" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.species}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.species">espécie is required.</small>
-                </div>
-                <div class="field">
-                    <label for="nascimento">Data de nascimento</label>
-                    <input type="date" pInputText id="nascimento" [(ngModel)]="solicitacao.nascimento" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.nascimento}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.nascimento">data de nascimento is required.</small>
-                </div>
-                <div class="field">
-                    <label for="peso">Peso</label>
-                    <input type="number" pInputText id="peso" [(ngModel)]="solicitacao.peso" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.peso}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.peso">peso is required.</small>
-                </div>
-                <div class="field">
-                    <label class="mb-3">Sexo</label>
-                    <div class="formgrid grid">
-                        <div class="field-radiobutton col-6">
-                            <p-radioButton name="sexo" value="Masculino" [(ngModel)]="solicitacao.sexo" label="Masculino"></p-radioButton>
-                        </div>
-                        <div class="field-radiobutton col-6">
-                            <p-radioButton name="sexo" value="Feminino" [(ngModel)]="solicitacao.sexo" label="Feminino"></p-radioButton>
-                        </div>
+                <div class="field"> 
+                    <label for="pet">Pet</label>
+                            <p-dropdown 
+            [options]="pets" 
+            [(ngModel)]="solicitacao.pet" 
+            optionLabel="name" 
+            optionValue="id" 
+            placeholder="Selecione um pet" 
+            [autoWidth]="false" 
+            [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.pet}">
+        </p-dropdown>
+        <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.pet">Pet is required.</small>
+
+        <div class="field">
+            <label for="tutor">Tutor</label>
+            <input type="text" pInputText id="tutor" [(ngModel)]="solicitacao.tutor" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.tutor}"/>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.tutor">tutor is required.</small>
+        </div>
+        <div class="field">
+            <label for="servico">servico</label>
+            <input type="text" pInputText id="servico" [(ngModel)]="solicitacao.servico" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.servico}"/>
+        </div>
+                    <div class="field">
+                        <label for="data">Data solicitação</label>
+                        <input type="date" pInputText id="data" [(ngModel)]="solicitacao.data" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.data}"/>
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.data">data de solicitação is required.</small>
                     </div>
-                </div>
+                   
+                    </div>
             </ng-template>
 
             <ng-template pTemplate="footer">
@@ -161,8 +138,7 @@
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="NÃO" (click)="deleteSolicitacaoDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="SIM" (click)="confirmDeleteSelected()"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="SIM" (click)="confirmDelete()"></button>
             </ng-template>
         </p-dialog>
     </div>
-</div>
