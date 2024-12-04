@@ -90,23 +90,23 @@ export class AppMenuComponent implements OnInit {
                     // },
                     {
                         label: 'Pets',
-                        icon: 'pi pi-fw pi-pencil',
+                        icon: 'pi pi-fw pi-plus',
                         routerLink: ['/pages/crud'],
                     },
                     // {
                     {
                         label: 'Tutor',
-                        icon: 'pi pi-fw pi-pencil',
+                        icon: 'pi pi-fw pi-plus',
                         routerLink: ['/pages/tutor']
                     },
                     {
                         label: 'Serviços',
-                        icon: 'pi pi-fw pi-pencil',
+                        icon: 'pi pi-fw pi-plus',
                         routerLink: ['/pages/servico']
                     },
                     {
                         label: 'Solicitaçoes',
-                        icon: 'pi pi-fw pi-pencil',
+                        icon: "pi pi-fw pi-plus",
                         routerLink: ['/pages/solicitacao']
                     },
                     // {
