@@ -1,0 +1,51 @@
+/* Ajustes responsivos apenas para telas pequenas (celulares) */
+@media (max-width: 768px) {
+    .grid {
+        padding: 1rem;
+        grid-template-columns: 1fr;
+    }
+
+    .p-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+
+    .p-table th, .p-table td {
+        padding: 8px 12px;
+    }
+
+    .p-button {
+        width: 100%;
+        margin: 0.5rem 0;
+        padding: 0.75rem;
+    }
+
+    .p-dialog {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .p-table-header-checkbox {
+        display: none;
+    }
+
+    .p-input-icon-left input {
+        width: 100%;
+    }
+
+    .field {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .p-table td {
+        padding: 6px 10px;
+    }
+
+    .p-button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}

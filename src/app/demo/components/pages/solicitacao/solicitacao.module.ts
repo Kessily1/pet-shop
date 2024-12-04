@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CrudRoutingModule } from './crud-routing.module';
-import { CrudComponent } from './crud.component';
+import { SolicitacaoRoutingModule } from './solicitacao-routing.module';
+import { SolicitacaoComponent } from './solicitacao.component';
 import { TableModule } from 'primeng/table';
 import { InputMaskModule } from 'primeng/inputmask'; 
 import { FileUploadModule } from 'primeng/fileupload';
@@ -22,7 +22,7 @@ import { DialogModule } from 'primeng/dialog';
 @NgModule({
     imports: [
         CommonModule,
-        CrudRoutingModule,
+        SolicitacaoRoutingModule,
         TableModule,
         FileUploadModule,
         FormsModule,
@@ -39,6 +39,6 @@ import { DialogModule } from 'primeng/dialog';
         InputNumberModule,
         DialogModule
     ],
-    declarations: [CrudComponent]
+    declarations: [SolicitacaoComponent]
 })
-export class CrudModule { }
+export class SolicitacaoModule { }

@@ -4,21 +4,24 @@ import { LayoutService } from './service/app.layout.service';
 
 @Component({
     selector: 'app-menu',
-    templateUrl: './app.menu.component.html'
+    templateUrl: './app.menu.component.html',
 })
 export class AppMenuComponent implements OnInit {
-
     model: any[] = [];
 
-    constructor(public layoutService: LayoutService) { }
+    constructor(public layoutService: LayoutService) {}
 
     ngOnInit() {
         this.model = [
             {
                 label: 'Home',
                 items: [
-                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
-                ]
+                    {
+                        label: 'Dashboard',
+                        icon: 'pi pi-fw pi-home',
+                        routerLink: ['/'],
+                    },
+                ],
             },
             // {
             //     label: 'UI Components',
@@ -86,9 +89,25 @@ export class AppMenuComponent implements OnInit {
                     //     ]
                     // },
                     {
-                        label: 'Crud',
-                        icon: 'pi pi-fw pi-pencil',
-                        routerLink: ['/pages/crud']
+                        label: 'Pets',
+                        icon: 'pi pi-fw pi-plus',
+                        routerLink: ['/pages/crud'],
+                    },
+                    // {
+                    {
+                        label: 'Tutor',
+                        icon: 'pi pi-fw pi-plus',
+                        routerLink: ['/pages/tutor']
+                    },
+                    {
+                        label: 'Serviços',
+                        icon: 'pi pi-fw pi-plus',
+                        routerLink: ['/pages/servico']
+                    },
+                    {
+                        label: 'Solicitaçoes',
+                        icon: "pi pi-fw pi-plus",
+                        routerLink: ['/pages/solicitacao']
                     },
                     // {
                     //     label: 'Timeline',
@@ -105,8 +124,8 @@ export class AppMenuComponent implements OnInit {
                     //     icon: 'pi pi-fw pi-circle-off',
                     //     routerLink: ['/pages/empty']
                     // },
-                ]
-            }
+                ],
+            },
             // {
             //     label: 'Hierarchy',
             //     items: [

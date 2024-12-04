@@ -1,0 +1,163 @@
+<!doctype html>
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="NOVO" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="DELETAR" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedSolicitacoes()" [disabled]="!selectedSolicitacoes || !selectedSolicitacoes.length"></button>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="IMPORTAR" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="EXPORTAR" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="Solicitacoes" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedSolicitacoes" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">SOLICITAÇÕES</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="PROCURAR..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="pet">Pet <p-sortIcon field="pet"></p-sortIcon></th>
+                        <th pSortableColumn="tutor">Tutor <p-sortIcon field="tutor"></p-sortIcon></th>
+                        <th pSortableColumn="servico">Serviço <p-sortIcon field="servico"></p-sortIcon></th>
+                        <th pSortableColumn="data">Data solicitação <p-sortIcon field="data"></p-sortIcon></th>
+                       
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-solicitacao>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="solicitacao"></p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">id</span>
+                            {{solicitacao.id || solicitacao.id}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">pet</span>
+                            {{solicitacao.pet  || 'N/A' }}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">tutor</span>
+                            {{solicitacao.tutor || 'N/A'}}
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">servico</span>
+                            {{solicitacao.servico || 'N/A'}} 
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">data</span>
+                            {{solicitacao.data || 'N/A'}} 
+                        </td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editsolicitacao(solicitacao)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deletesolicitacao(solicitacao)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="solicitacaoDialog" [style]="{width: '450px'}" header="SOLICITAÇÕES" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <img [src]="'assets/demo/images/product/' + solicitacao.image" [alt]="solicitacao.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="solicitacao.image">
+                <div class="field">
+                    <label for="nome">nome</label>
+                    <input type="text" pInputText id="nome" [(ngModel)]="solicitacao.nome" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.nome}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.nome">nome is required.</small>
+                </div>
+                <div class="field">
+                    <label for="pet">Pet</label>
+                    <p-dropdown 
+                        [options]="pets" 
+                        [(ngModel)]="solicitacao.pet" 
+                        optionLabel="name"     
+                        optionValue="id"      
+                        placeholder="Selecione um pet" 
+                        [autoWidth]="false" 
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.pet}">
+                    </p-dropdown>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.pet">Pet é obrigatório.</small>
+                </div>
+                
+                <div class="field">
+                    <label for="tutor">Tutor</label>
+                    <p-dropdown 
+                        [options]="tutors" 
+                        [(ngModel)]="solicitacao.tutor" 
+                        optionLabel="name"    
+                        optionValue="id"    
+                        placeholder="Selecione um tutor" 
+                        [autoWidth]="false" 
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.tutor}">
+                    </p-dropdown>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.tutor">Tutor é obrigatório.</small>
+                </div>
+                
+                <div class="field">
+                    <label for="servico">Serviço</label>
+                    <p-dropdown 
+                        [options]="servicos" 
+                        [(ngModel)]="solicitacao.servico" 
+                        optionLabel="nome"    
+                        optionValue="id"    
+                        placeholder="Selecione um serviço" 
+                        [autoWidth]="false" 
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.servico}">
+                    </p-dropdown>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.servico">servico é obrigatório.</small>
+                </div>
+                
+                    <div class="field">
+                        <label for="data">Data solicitação</label>
+                        <input type="date" pInputText id="data" [(ngModel)]="solicitacao.data" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.data}"/>
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.data">data de solicitação is required.</small>
+                    </div>
+                   
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="CANCELAR" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="SALVAR" icon="pi pi-check" class="p-button-text" (click)="saveSolicitacao()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deletesolicitacaoDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="solicitacao">Tem certeza de que deseja excluir? <b>{{solicitacao.name}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="NÃO" (click)="deletesolicitacaoDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="SIM" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deletesolicitacaoDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to delete selected products?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="NÃO" (click)="deleteSolicitacaoDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="SIM" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>

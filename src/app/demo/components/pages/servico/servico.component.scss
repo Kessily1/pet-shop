@@ -1,0 +1,18 @@
+/* Estilos para o campo de duração */
+.input-duracao {
+    width: 100%; /* Define a largura como 100% do contêiner pai */
+    max-width: 400px; /* Define um limite de largura para o campo, pode ajustar conforme necessário */
+    height: 40px; /* Define a altura do campo de input */
+    padding: 21px; /* Adiciona um espaçamento interno */
+    border-radius: 8px; /* Bordas arredondadas */
+    border: 1px solid #ccc; /* Cor da borda */
+    font-size: 1em; /* Define o tamanho da fonte */
+    box-sizing: border-box; /* Inclui o padding e border no cálculo da largura e altura */
+  }
+  
+  /* Ajuste para quando o campo estiver em foco (opcional) */
+  .input-duracao:focus {
+    border-color: #0066cc; /* Cor da borda quando o campo estiver em foco */
+    outline: none; /* Remove o contorno padrão */
+  }
+  

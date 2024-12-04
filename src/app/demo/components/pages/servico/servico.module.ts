@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CrudRoutingModule } from './crud-routing.module';
-import { CrudComponent } from './crud.component';
+import { ServicoRoutingModule } from './servico-routing.module';
+import { ServicoComponent } from './servico.component';
 import { TableModule } from 'primeng/table';
-import { InputMaskModule } from 'primeng/inputmask'; 
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
+import { InputMaskModule } from 'primeng/inputmask'; 
 import { ToolbarModule } from 'primeng/toolbar';
 import { RatingModule } from 'primeng/rating';
 import { InputTextModule } from 'primeng/inputtext';
@@ -18,16 +18,16 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 
-
 @NgModule({
     imports: [
         CommonModule,
-        CrudRoutingModule,
+        ServicoRoutingModule,
         TableModule,
         FileUploadModule,
         FormsModule,
-        InputMaskModule,
         ButtonModule,
+        InputMaskModule,
+
         RippleModule,
         ToastModule,
         ToolbarModule,
@@ -39,6 +39,6 @@ import { DialogModule } from 'primeng/dialog';
         InputNumberModule,
         DialogModule
     ],
-    declarations: [CrudComponent]
+    declarations: [ServicoComponent]
 })
-export class CrudModule { }
+export class ServicoModule { }

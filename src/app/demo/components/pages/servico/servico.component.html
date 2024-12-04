@@ -1,0 +1,148 @@
+<!doctype html>
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="NOVO" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="DELETAR" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedServicos()" [disabled]="!selectedServicos || !selectedServicos.length"></button>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="IMPORTAR" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="EXPORTAR" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="Servicos" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['nome','country.nome','representative.nome','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedServicos" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">INFORMACÕES DE SERVIÇOS</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="PROCURAR..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon></th>
+                        <th pSortableColumn="descricao">Descrição <p-sortIcon field="descricao"></p-sortIcon></th> 
+                        <th pSortableColumn="price">valor <p-sortIcon field="price"></p-sortIcon></th>                      
+                        <th pSortableColumn="price">Duração <p-sortIcon field="price"></p-sortIcon></th>                      
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-servico>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="servico"></p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">id</span>
+                            {{servico.id || servico.id}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">nome</span>
+                            {{servico.nome  || 'N/A' }}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">descricao</span>
+                            {{servico.descricao || 'N/A'}}
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">valor</span>
+                            {{servico.valor | currency:'USD'}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">duracao</span>
+                            {{servico.duracao || 'N/A'}}
+                        </td>
+                       
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editservico(servico)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteservico(servico)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="servicoDialog" [style]="{width: '450px'}" header="servico Details" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <img [src]="'assets/demo/images/servico/' + servico.image" [alt]="servico.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="servico.image">
+                <div class="field">
+                    <label for="nome">Nome</label>
+                    <input type="text" pInputText id="nome" [(ngModel)]="servico.nome" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !servico.nome}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !servico.nome">nome is required.</small>
+                </div>
+                <div class="field">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" pInputTextarea [(ngModel)]="servico.descricao" required rows="3" cols="20"></textarea>
+                </div>
+                <div class="formgrid grid">
+                    <div class="field col">
+                        <label for="valor">Valor</label>
+                        <p-inputNumber 
+                            id="valor" 
+                            [(ngModel)]="servico.valor" 
+                            mode="currency" 
+                            currency="USD" 
+                            locale="en-US"
+                            nome="valor">
+                        </p-inputNumber>
+                    </div>
+                
+                    <div class="field col">
+                        <label for="duracao">Duração</label>
+                        <input 
+                            id="duracao" 
+                            type="text" 
+                            [(ngModel)]="servico.duracao" 
+                            nome="duracao"
+                            placeholder="Ex: 1 hora, 30 minutos" 
+                            (blur)="convertToMinutes()" 
+                            class="input-duracao" 
+                            autocomplete="off" />
+                    </div>
+                </div>
+                
+            </ng-template>
+               
+                
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="CANCELAR" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="SALVAR" icon="pi pi-check" class="p-button-text" (click)="saveServico()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteServicoDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="servico">Tem certeza de que deseja excluir? <b>{{servico.nome}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="NÃO" (click)="deleteServicoDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="SIM" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteServicosDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to delete selected servicos?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="NÃO" (click)="deleteServicosDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="SIM" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>

@@ -17,20 +17,26 @@ import { environment } from '../environments/environment';
 
 
 @NgModule({
-    declarations: [
-        AppComponent, NotfoundComponent
-    ],
-    imports: [
-        AppRoutingModule,
-        AppLayoutModule,
-        AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule
-    ],
-    providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
-        CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    NotfoundComponent,
+  ],
+  imports: [
+    AppRoutingModule,
+    AppLayoutModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
+  ],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    CountryService,
+    CustomerService,
+    EventService,
+    IconService,
+    NodeService,
+    PhotoService,
+    ProductService,
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,6 +6,7 @@ import { PetService } from '../../../../demo/service/pet.service';
 
 @Component({
     templateUrl: './crud.component.html',
+     styleUrls: ['./crud.component.scss'], 
     providers: [MessageService]
 })
 export class CrudComponent implements OnInit {
@@ -106,7 +107,7 @@ export class CrudComponent implements OnInit {
         if (this.pet.name?.trim()) {
             if (this.pet.id) {
                 // @ts-ignore
-                this.pet.inventoryStatus = this.pet.inventoryStatus.value ? this.pet.inventoryStatus.value : this.pet.inventoryStatus;
+                this.pet.inventoryStatus = this.pet.inventoryStatus ? this.pet.inventoryStatus.value : 'INSTOCK';
                 // this.pets[this.findIndexById(this.pet.id)] = this.pet;
                 this.petService.updatePet(this.pet.key, this.pet);
                 this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Pet Updated', life: 3000 });
