@@ -13,6 +13,7 @@ export interface tutor {
     cep?: any;              
     estado?: any;           
     municipio?: any;           
+    municipios?: any[]; // Adiciona uma nova propriedade para possíveis municípios
     cpf?: string; 
     sexo?: 'Masculino' | 'Feminino' | 'Outro'
 
