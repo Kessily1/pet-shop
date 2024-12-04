@@ -13,6 +13,8 @@
 
     .p-toolbar .my-2 {
         margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
     }
     
     /* Ajustes na tabela */
@@ -23,7 +25,7 @@
 
     /* Ajustes nos botões */
     .p-button {
-        width: auto; /* Tamanho automático para que não fiquem tão largos */
+        width: 100%; /* Largura total para melhor alinhamento */
         margin: 5px 0; /* Margem reduzida */
         padding: 8px 12px; /* Menor padding */
         font-size: 0.875rem; /* Tamanho de texto ajustado */
@@ -31,8 +33,9 @@
 
     /* Ajuste para os botões de ação na barra de ferramentas */
     .p-toolbar .p-button {
-        width: auto; /* Tamanho ajustado para todos os botões */
-        margin-right: 5px; /* Menor espaço entre os botões */
+        width: 100%; /* Largura total para melhor alinhamento */
+        margin-right: 0; /* Remover margem direita */
+        margin-bottom: 5px; /* Adicionar margem inferior */
         padding: 8px 12px; /* Ajuste no padding para os botões */
         font-size: 0.875rem; /* Tamanho de texto uniforme */
     }
