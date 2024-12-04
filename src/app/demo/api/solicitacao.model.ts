@@ -10,12 +10,23 @@ interface Pet {
     // Add other properties as needed
 }
 
+interface tutor{
+    id?: string;
+    name?: string;
+}
+
+interface servico{
+    id?: string;
+    name?: string;
+}
+
+
 export interface solicitacao {
     id?: string;
   key?: string;
   Pet?: Pet;  
   tutor?: string;
   servico?: string;
-  dataSolicitacao?: Date;
+  data?: Date;
   nome?: string;
 }

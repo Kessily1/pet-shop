@@ -83,35 +83,54 @@
                     <input type="text" pInputText id="nome" [(ngModel)]="solicitacao.nome" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.nome}"/>
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.nome">nome is required.</small>
                 </div>
-                <div class="field"> 
+                <div class="field">
                     <label for="pet">Pet</label>
-                            <p-dropdown 
-            [options]="pets" 
-            [(ngModel)]="solicitacao.pet" 
-            optionLabel="name" 
-            optionValue="id" 
-            placeholder="Selecione um pet" 
-            [autoWidth]="false" 
-            [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.pet}">
-        </p-dropdown>
-        <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.pet">Pet is required.</small>
-
-        <div class="field">
-            <label for="tutor">Tutor</label>
-            <input type="text" pInputText id="tutor" [(ngModel)]="solicitacao.tutor" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.tutor}"/>
-            <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.tutor">tutor is required.</small>
-        </div>
-        <div class="field">
-            <label for="servico">servico</label>
-            <input type="text" pInputText id="servico" [(ngModel)]="solicitacao.servico" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.servico}"/>
-        </div>
+                    <p-dropdown 
+                        [options]="pets" 
+                        [(ngModel)]="solicitacao.pet" 
+                        optionLabel="name"     
+                        optionValue="id"      
+                        placeholder="Selecione um pet" 
+                        [autoWidth]="false" 
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.pet}">
+                    </p-dropdown>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.pet">Pet é obrigatório.</small>
+                </div>
+                
+                <div class="field">
+                    <label for="tutor">Tutor</label>
+                    <p-dropdown 
+                        [options]="tutors" 
+                        [(ngModel)]="solicitacao.tutor" 
+                        optionLabel="name"    
+                        optionValue="id"    
+                        placeholder="Selecione um tutor" 
+                        [autoWidth]="false" 
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.tutor}">
+                    </p-dropdown>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.tutor">Tutor é obrigatório.</small>
+                </div>
+                
+                <div class="field">
+                    <label for="servico">Serviço</label>
+                    <p-dropdown 
+                        [options]="servicos" 
+                        [(ngModel)]="solicitacao.servico" 
+                        optionLabel="nome"    
+                        optionValue="id"    
+                        placeholder="Selecione um serviço" 
+                        [autoWidth]="false" 
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.servico}">
+                    </p-dropdown>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.servico">servico é obrigatório.</small>
+                </div>
+                
                     <div class="field">
                         <label for="data">Data solicitação</label>
                         <input type="date" pInputText id="data" [(ngModel)]="solicitacao.data" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !solicitacao.data}"/>
                         <small class="ng-dirty ng-invalid" *ngIf="submitted && !solicitacao.data">data de solicitação is required.</small>
                     </div>
                    
-                    </div>
             </ng-template>
 
             <ng-template pTemplate="footer">

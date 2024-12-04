@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { solicitacao } from '../../../api/solicitacao.model';
-import { Pet } from '../../../api/pet.model'; 
+import { Pet } from '../../../api/pet.model';
+import { Servico } from '../../../api/servico.model';  
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { solicitacaoService } from '../../../service/solicitacao.service';
 import { PetService } from '../../../service/pet.service';
+import { tutorService } from '../../../service/tutor.service'; 
+import { ServicoService } from '../../../service/servico.service'; 
 
 @Component({
     templateUrl: './solicitacao.component.html',
@@ -26,23 +29,32 @@ export class SolicitacaoComponent implements OnInit {
     statuses: any[] = [];
     rowsPerPageOptions = [5, 10, 20];
 
-    pets: Pet[] = []; // Armazena os pets carregados
-    selectedPet: Pet | null = null; // Pet selecionado no formulário
+    pets: Pet[] = []; 
+    selectedPet: Pet | null = null; 
+
+    tutors: any[] = [];  
+    selectedTutor: string | null = null; 
+
+    servicos: Servico[] = [];  
+    selectedServico: string | null = null;  
 
     constructor(
         private solicitacaoService: solicitacaoService,
-        private petService: PetService, // Injeta o serviço de Pets
+        private petService: PetService, 
+        private tutorService: tutorService, 
+        private ServicoService: ServicoService, 
         private messageService: MessageService
     ) { }
 
     ngOnInit() {
-        // Carrega as solicitações
         this.solicitacaoService.getSolicitacaos().subscribe(data => this.Solicitacoes = data);
 
-        // Carrega os últimos pets
         this.loadLastPets();
 
-        // Define as colunas da tabela
+        this.loadTutors();
+
+        this.loadServicos();
+
         this.cols = [
             { field: 'product', header: 'Solicitação' },
             { field: 'price', header: 'Price' },
@@ -51,7 +63,6 @@ export class SolicitacaoComponent implements OnInit {
             { field: 'inventoryStatus', header: 'Status' }
         ];
 
-        // Define os status de inventário
         this.statuses = [
             { label: 'INSTOCK', value: 'instock' },
             { label: 'LOWSTOCK', value: 'lowstock' },
@@ -59,23 +70,44 @@ export class SolicitacaoComponent implements OnInit {
         ];
     }
 
-    // Carrega os últimos pets registrados
     loadLastPets() {
         this.petService.getLastPets(5).subscribe(data => {
             this.pets = data;
         });
     }
 
-    // Quando um pet é selecionado no formulário
+    loadTutors() {
+        this.tutorService.getTutors().subscribe(data => {
+            this.tutors = data;
+        });
+    }
+
+    loadServicos() {
+        this.ServicoService.getServicos().subscribe(data => {
+            this.servicos = data;
+        });
+    }
+
     onPetSelect(pet: Pet) {
         this.selectedPet = pet;
         console.log('Pet selecionado:', pet);
     }
 
-    // Funções do CRUD de Solicitações
+    onTutorSelect(tutorId: string) {
+        this.selectedTutor = tutorId;
+        console.log('Tutor selecionado:', tutorId);
+    }
+
+    onServicoSelect(servicoId: string) {
+        this.selectedServico = servicoId;
+        console.log('Serviço selecionado:', servicoId);
+    }
+
     openNew() {
         this.solicitacao = {};
-        this.selectedPet = null; // Reseta o pet selecionado
+        this.selectedPet = null; 
+        this.selectedTutor = null; 
+        this.selectedServico = null; 
         this.submitted = false;
         this.solicitacaoDialog = true;
     }
@@ -86,16 +118,21 @@ export class SolicitacaoComponent implements OnInit {
         if (this.solicitacao.nome?.trim()) {
             if (this.solicitacao.id) {
                 this.solicitacaoService.updateSolicitacao(this.solicitacao.key, this.solicitacao);
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Solicitação Updated', life: 3000 });
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Solicitação Atualizada', life: 3000 });
             } else {
                 this.solicitacao.id = this.createId();
                 this.solicitacaoService.createSolicitacao(this.solicitacao);
-                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Solicitação Created', life: 3000 });
+                this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Solicitação Criada', life: 3000 });
             }
 
-            // Associa o pet selecionado à solicitação
             if (this.selectedPet) {
                 this.solicitacao.Pet = this.selectedPet;
+            }
+            if (this.selectedTutor) {
+                this.solicitacao.tutor = this.selectedTutor;
+            }
+            if (this.selectedServico) {
+                this.solicitacao.servico = this.selectedServico;
             }
 
             this.Solicitacoes = [...this.Solicitacoes];
@@ -107,6 +144,8 @@ export class SolicitacaoComponent implements OnInit {
     editsolicitacao(solicitacao: solicitacao) {
         this.solicitacao = { ...solicitacao };
         this.selectedPet = solicitacao.Pet || null;
+        this.selectedTutor = solicitacao.tutor || null;
+        this.selectedServico = solicitacao.servico || null;
         this.solicitacaoDialog = true;
     }
 
@@ -120,7 +159,7 @@ export class SolicitacaoComponent implements OnInit {
         this.solicitacaoService.deleteSolicitacao(this.solicitacao.id!);
         this.solicitacao = {};
         this.deletesolicitacaoDialog = false;
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Solicitação Deleted', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Solicitação Deletada', life: 3000 });
     }
 
     hideDialog() {
