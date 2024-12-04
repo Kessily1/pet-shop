@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CrudRoutingModule } from './crud-routing.module';
 import { CrudComponent } from './crud.component';
 import { TableModule } from 'primeng/table';
+import { InputMaskModule } from 'primeng/inputmask'; 
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
@@ -25,6 +26,7 @@ import { DialogModule } from 'primeng/dialog';
         TableModule,
         FileUploadModule,
         FormsModule,
+        InputMaskModule,
         ButtonModule,
         RippleModule,
         ToastModule,

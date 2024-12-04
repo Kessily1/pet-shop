@@ -5,11 +5,10 @@ interface InventoryStatus {
 export interface Servico {
     id?: string;  
     key?: string;          
-    name?: string;           
-    cor?: string;            
-    idade?: number;          
-    sexo?: 'Masculino' | 'Feminino' | 'Outro'; 
-    species?: string;         
-    nascimento?: Date;       
-    peso?: number;           
+    nome?: string;           
+    descricao?: string;
+    duracao?: number; 
+    valor?: number;          
+    inventoryStatus?: InventoryStatus; 
 }
+

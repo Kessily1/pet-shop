@@ -17,7 +17,7 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="Servicos" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedServicos" selectionMode="multiple" [rowHover]="true" dataKey="id">
+            <p-table #dt [value]="Servicos" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['nome','country.nome','representative.nome','status']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedServicos" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                         <h5 class="m-0">INFORMACÕES DE SERVIÇOS</h5>
@@ -33,7 +33,7 @@
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
                         <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
-                        <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon></th>
                         <th pSortableColumn="descricao">Descrição <p-sortIcon field="descricao"></p-sortIcon></th> 
                         <th pSortableColumn="price">valor <p-sortIcon field="price"></p-sortIcon></th>                      
                         <th pSortableColumn="price">Duração <p-sortIcon field="price"></p-sortIcon></th>                      
@@ -49,7 +49,7 @@
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">nome</span>
-                            {{servico.name  || 'N/A' }}
+                            {{servico.nome  || 'N/A' }}
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">descricao</span>
@@ -58,6 +58,10 @@
                         <td style="width:14%; min-width:8rem;">
                             <span class="p-column-title">valor</span>
                             {{servico.valor | currency:'USD'}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">duracao</span>
+                            {{servico.duracao || 'N/A'}}
                         </td>
                        
                         <td>
@@ -75,29 +79,41 @@
             <ng-template pTemplate="content">
                 <img [src]="'assets/demo/images/servico/' + servico.image" [alt]="servico.image" width="150" class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="servico.image">
                 <div class="field">
-                    <label for="name">Name</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="servico.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !servico.name}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !servico.name">Name is required.</small>
+                    <label for="nome">Nome</label>
+                    <input type="text" pInputText id="nome" [(ngModel)]="servico.nome" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !servico.nome}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !servico.nome">nome is required.</small>
                 </div>
                 <div class="field">
-                    <label for="descricao">descricão</label>
-                    <input type="text" pInputText id="descricao" [(ngModel)]="servico.descricao" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !servico.descricao}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !servico.descricao"  required rows="3" cols="20">descricao is required.</small>
-                </div>
-                <div class="field">
-                    <label for="description">Descrição</label>
-                    <textarea id="description" pInputTextarea [(ngModel)]="servico.description" required rows="3" cols="20"></textarea>
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" pInputTextarea [(ngModel)]="servico.descricao" required rows="3" cols="20"></textarea>
                 </div>
                 <div class="formgrid grid">
                     <div class="field col">
-                        <label for="price">Valor</label>
-                        <p-inputNumber id="price" [(ngModel)]="servico.price" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+                        <label for="valor">Valor</label>
+                        <p-inputNumber 
+                            id="valor" 
+                            [(ngModel)]="servico.valor" 
+                            mode="currency" 
+                            currency="USD" 
+                            locale="en-US"
+                            nome="valor">
+                        </p-inputNumber>
                     </div>
+                
                     <div class="field col">
-                        <label for="quantity">Duração</label>
-                        <p-inputNumber id="quantity" [(ngModel)]="servico.quantity"></p-inputNumber>
+                        <label for="duracao">Duração</label>
+                        <input 
+                            id="duracao" 
+                            type="text" 
+                            [(ngModel)]="servico.duracao" 
+                            nome="duracao"
+                            placeholder="Ex: 1 hora, 30 minutos" 
+                            (blur)="convertToMinutes()" 
+                            class="input-duracao" 
+                            autocomplete="off" />
                     </div>
                 </div>
+                
             </ng-template>
                
                 
@@ -110,7 +126,7 @@
         <p-dialog [(visible)]="deleteServicoDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="servico">Tem certeza de que deseja excluir? <b>{{servico.name}}</b>?</span>
+                <span *ngIf="servico">Tem certeza de que deseja excluir? <b>{{servico.nome}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="NÃO" (click)="deleteServicoDialog = false"></button>

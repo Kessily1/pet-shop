@@ -6,9 +6,13 @@ import { ServicoService } from '../../../../demo/service/servico.service';
 
 @Component({
     templateUrl: './servico.component.html',
+    styleUrls: ['./servico.component.scss'], 
+
     providers: [MessageService]
 })
 export class ServicoComponent implements OnInit {
+
+    duracao: number = 0;
 
     servicoDialog: boolean = false;
 
@@ -102,8 +106,8 @@ export class ServicoComponent implements OnInit {
 
     saveServico() {
         this.submitted = true;
-
-        if (this.servico.name?.trim()) {
+        console.log('Antes de salvar, servico:', this.servico);
+        if (this.servico.nome?.trim()) {
             if (this.servico.id) {
                 // @ts-ignore
                 this.servico.inventoryStatus = this.servico.inventoryStatus ? this.servico.inventoryStatus.value : 'INSTOCK';
@@ -149,4 +153,51 @@ export class ServicoComponent implements OnInit {
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
+
+    adjustHeight(event: Event): void {
+        const textarea = event.target as HTMLTextAreaElement;
+        textarea.style.height = 'auto'; // Reseta a altura
+        textarea.style.height = `${textarea.scrollHeight}px`; // Ajusta para o conteúdo
+    }
+
+    convertToMinutes() {
+        // Verifica se duracao é um número ou string
+        if (this.servico.duracao && (typeof this.servico.duracao === 'string' || typeof this.servico.duracao === 'number')) {
+            // Converte duracao para string se for número
+            const duracaoString = this.servico.duracao.toString();
+    
+            const regexHora = /(\d+)\s*(hora|horas)/i;
+            const regexMinuto = /(\d+)\s*(minuto|minutos)/i;
+    
+            const horaMatch = duracaoString.match(regexHora);
+            const minutoMatch = duracaoString.match(regexMinuto);
+    
+            let duracaoEmMinutos = 0;
+    
+            // Se encontrou uma expressão com 'hora' ou 'horas'
+            if (horaMatch) {
+                const horas = parseInt(horaMatch[1], 10);
+                duracaoEmMinutos += horas * 60;
+            }
+    
+            // Se encontrou uma expressão com 'minuto' ou 'minutos'
+            if (minutoMatch) {
+                const minutos = parseInt(minutoMatch[1], 10);
+                duracaoEmMinutos += minutos;
+            }
+    
+            // Salva a duração em minutos
+            if (duracaoEmMinutos > 0) {
+                this.servico.duracao = duracaoEmMinutos; // Agora armazenamos o valor como número
+                console.log(`Duração convertida: ${duracaoEmMinutos} minutos`);
+            } else {
+                alert('Por favor, insira uma duração válida (ex: 1 hora, 30 minutos)');
+                this.servico.duracao = 0; 
+            }
+        } 
+    }
+    
+    
+    
+    
 }

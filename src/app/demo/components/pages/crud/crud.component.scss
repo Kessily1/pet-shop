@@ -1,0 +1,78 @@
+/* Estilos responsivos para dispositivos móveis */
+@media (max-width: 768px) {
+    /* Ajustes no card */
+    .card {
+        padding: 12px;
+    }
+    
+    /* Ajustes na barra de ferramentas */
+    .p-toolbar {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .p-toolbar .my-2 {
+        margin-bottom: 10px;
+    }
+    
+    /* Ajustes na tabela */
+    .p-table {
+        width: 100%;
+        font-size: 0.875rem; /* Menor texto */
+    }
+
+    /* Ajustes nos botões */
+    .p-button {
+        width: auto; /* Tamanho automático para que não fiquem tão largos */
+        margin: 5px 0; /* Margem reduzida */
+        padding: 8px 12px; /* Menor padding */
+        font-size: 0.875rem; /* Tamanho de texto ajustado */
+    }
+
+    /* Ajuste para os botões de ação na barra de ferramentas */
+    .p-toolbar .p-button {
+        width: auto; /* Tamanho ajustado para todos os botões */
+        margin-right: 5px; /* Menor espaço entre os botões */
+        padding: 8px 12px; /* Ajuste no padding para os botões */
+        font-size: 0.875rem; /* Tamanho de texto uniforme */
+    }
+
+    /* Ajuste para o filtro global na tabela */
+    .p-input-icon-left input {
+        width: 100%;
+    }
+    
+    /* Ajustes no diálogo */
+    .p-dialog {
+        width: 90%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    /* Ajuste nos ícones dentro do diálogo */
+    .p-dialog img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+
+    /* Ajustes nas colunas da tabela */
+    .p-table th, .p-table td {
+        font-size: 0.875rem;
+        word-wrap: break-word;
+    }
+    
+    /* Ajustes na exibição dos campos no diálogo */
+    .field {
+        margin-bottom: 10px;
+    }
+
+    .field-radiobutton {
+        flex: 1 1 100%;
+    }
+    
+    /* Ajustes no layout da página */
+    .grid {
+        display: block;
+    }
+}

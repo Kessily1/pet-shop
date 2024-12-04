@@ -8,6 +8,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
+import { InputMaskModule } from 'primeng/inputmask'; 
 import { ToolbarModule } from 'primeng/toolbar';
 import { RatingModule } from 'primeng/rating';
 import { InputTextModule } from 'primeng/inputtext';
@@ -25,6 +26,8 @@ import { DialogModule } from 'primeng/dialog';
         FileUploadModule,
         FormsModule,
         ButtonModule,
+        InputMaskModule,
+
         RippleModule,
         ToastModule,
         ToolbarModule,

@@ -120,7 +120,7 @@
                 <div class="field">
                     <label for="CEP">CEP</label>
                    <input type="number" pInputText id="cep" [(ngModel)]="tutor.cep" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.cep}" (blur)="getCep(tutor.cep)"/>
-                <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.cep">CEP is required.</small>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.cep">CEP is required.</small>  
                 </div>
                 <div class="field">
                     <label for="ufs">Estado</label>
@@ -142,13 +142,15 @@
                 
                 <div class="field">
                     <label for="CPF">CPF</label>
-                    <input type="number" pInputText id="CPF" [(ngModel)]="tutor.CPF" required autofocus [appMask]="'000.000.000-00'" [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.CPF}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.CPF">CPF is required.</small>
+                    <p-inputMask mask="999.999.999-99" [(ngModel)]="tutor.CPF">
+                    <input type="number" pInputText id="CPF" [(ngModel)]="tutor.CPF" required autofocus  [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.CPF}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.CPF">CPF is required.</small> </p-inputMask>
                 </div>
                 <div class="field">
                     <label for="Telefone">Telefone</label>
+                    <p-inputMask mask="(99) 99999-9999" [(ngModel)]="tutor.Telefone">
                     <input type="number" pInputText id="Telefone" [(ngModel)]="tutor.Telefone" required autofocus [appMask]="'000.000.000-00'" [ngClass]="{'ng-invalid ng-dirty' : submitted && !tutor.Telefone}" />
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.Telefone">Telefone is required.</small>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !tutor.Telefone">Telefone is required.</small> </p-inputMask>
                 </div>            
         
                 <div class="field">

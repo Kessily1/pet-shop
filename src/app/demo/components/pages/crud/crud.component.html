@@ -106,7 +106,7 @@
                 </div>
                 <div class="field">
                     <label for="idade">Idade</label>
-                    <input type="text" pInputText id="idade" [(ngModel)]="pet.idade" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.idade}"/>
+                    <input type="number" pInputText id="idade" [(ngModel)]="pet.idade" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !pet.idade}"/>
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !pet.idade">idade is required.</small>
                 </div>
                 <div class="field">

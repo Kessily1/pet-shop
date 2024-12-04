@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TutorRoutingModule } from './tutor-routing.module';
 import { TutorComponent } from './tutor.component';
 import { TableModule } from 'primeng/table';
+import { InputMaskModule } from 'primeng/inputmask'; 
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
@@ -17,13 +18,16 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
 
+
 @NgModule({
     imports: [
+        
         CommonModule,
         TutorRoutingModule,
         TableModule,
         FileUploadModule,
         FormsModule,
+        InputMaskModule,
         ButtonModule,
         RippleModule,
         ToastModule,
@@ -34,7 +38,8 @@ import { DialogModule } from 'primeng/dialog';
         DropdownModule,
         RadioButtonModule,
         InputNumberModule,
-        DialogModule
+        DialogModule,
+       
     ],
     declarations: [TutorComponent]
 })
